@@ -1,0 +1,6 @@
+<h4>Redirect Digital Ocean IP address to domain name</h4><ol><li><p>Login to digital ocean droplet via ssh</p></li><li><p>Time to configure nginx</p></li><li><p><code>cd /etc/nginx/sites-available</code></p></li><li><p><code>sudo vim default</code></p></li><li><p>Add additional server block in&nbsp; &gt; default (<em>put at the end of file</em>) &gt; see below</p></li></ol><pre class="prettyprint linenums">server {
+    listen 80;
+    server_name 123.456.789.999;
+
+    return 301 $scheme://domain.com$request_uri;
+}</pre><p><br></p><ol><li><p>Restart nginx once you have made the above change</p></li><li><p><code>sudo systemctl restart nginx</code></p></li></ol><p>Done! Now anyone who tries to access your site using IP address directly will get auto redirected to domain name!</p>

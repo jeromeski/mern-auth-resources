@@ -1,0 +1,7 @@
+<h4>Simple rules of useEffect</h4><p><br></p><p>Understanding <code>useEffect</code> can be tricky. If you have worked with class based components before you might have used <code>componentDidMount()</code> and <code>componentDidUnmount()</code> lifecycle methods.</p><p>Now with hooks we have useEffect() for handling lifecycle.</p><p><br></p><ul><li><p>useEffect takes two arguments function <code>() =&gt; ()</code> and array <code>[]</code> to take dependencies to decide when to run</p></li><li><p>Runs each time state changes, if you dont pass <code>[]</code> as second argument </p></li></ul><pre class="prettyprint linenums">useEffect(() =&gt; {
+    //
+})</pre><p><br></p><ul><li><p>Runs when component mounts and unmounts</p></li></ul><pre class="prettyprint linenums">useEffect(() =&gt; {
+    //
+}, [])</pre><p><br></p><ul><li><p>Runs when the value in <code>[run]</code> changes. So <code>run</code> is dependency here.</p></li><li><p><code>run</code> could be state, route parameter etc</p></li></ul><pre class="prettyprint linenums">useEffect(() =&gt; {
+    //
+}, [run])</pre>

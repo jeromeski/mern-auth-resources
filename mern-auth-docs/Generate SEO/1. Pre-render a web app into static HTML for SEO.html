@@ -1,0 +1,45 @@
+<h4>Pre-render a web app into static HTML for SEO</h4><p>Currently our entire react app is rendered in a div with an id of root. If you right click on the page, this is what you see: </p><figure><img src="https://udemy-images.s3.amazonaws.com:443/redactor/raw/2019-11-29_10-06-08-5b95c6743de4001897ed8bb9724cce38.png"></figure><p>Read more on <a href="https://www.npmjs.com/package/react-snap" rel="noopener noreferrer" target="_blank">https://www.npmjs.com/package/react-snap</a></p><p><code>npm i react-snap</code></p><p><br></p><p><strong>Add to your scripts in </strong><code><strong>package.json</strong></code></p><p><code>"postbuild": "react-snap"</code></p><p><br></p><p><strong>Update </strong><code><strong>index.js</strong></code></p><pre class="prettyprint linenums">import React from 'react';
+import ReactDOM, { hydrate, render } from 'react-dom';
+import Routes from './Routes';
+
+const rootElement = document.getElementById('root');
+if (rootElement.hasChildNodes()) {
+    hydrate(&lt;Routes /&gt;, rootElement);
+} else {
+    render(&lt;Routes /&gt;, rootElement);
+}</pre><p><br></p><p>lets run <code>npm run build</code> and run the app locally (mocking the production environment)</p><pre class="prettyprint linenums">npm install -g serve
+serve -s build</pre><p><br></p><p>Now deploy your app and run <code>npm run build</code></p><p>Now right click to view the page source</p><p>It's not just a <code>div</code> with id of <code>root</code></p><p>Now We have fully rendered html page, much better for SEO</p><figure><img src="https://udemy-images.s3.amazonaws.com:443/redactor/raw/2019-11-29_10-09-51-304748d5fb8e71448c07603d6f201ca9.png"></figure><p><br></p><p>Further work on head section for each page using <code>react-helmet</code></p><p><a href="https://www.npmjs.com/package/react-helmet" rel="noopener noreferrer" target="_blank">https://www.npmjs.com/package/react-helmet</a></p><p><br></p><p><strong>Full code </strong><code><strong>App.js</strong></code></p><pre class="prettyprint linenums">import React from 'react';
+import Layout from './core/Layout';
+import { Helmet } from 'react-helmet';
+
+const App = () =&gt; {
+    const head = () =&gt; (
+        &lt;Helmet&gt;
+            &lt;meta charSet="utf-8" /&gt;
+            &lt;title&gt;MERN Stack&lt;/title&gt;
+            &lt;link rel="canonical" href="https://mern-stack.com" /&gt;
+        &lt;/Helmet&gt;
+    );
+    return (
+        &lt;Layout&gt;
+            {head()}
+            &lt;div className="col-md-6 offset-md-3 text-center"&gt;
+                &lt;h1 className="p-5"&gt;React Node MongoDB Authentication Boilerplate&lt;/h1&gt;
+                &lt;h2&gt;MERN STACK&lt;/h2&gt;
+                &lt;hr /&gt;
+                &lt;p className="lead"&gt;
+                    MERN stack login register system with account activation, forgot password, reset password, login
+                    with facebook and google as well as private and protected routes for authenticated user and users
+                    with the role of admin.
+                &lt;/p&gt;
+                &lt;h4 className="p2"&gt;Bonus&lt;/h4&gt;
+                &lt;p className="lead"&gt;Profile update &amp; deployment to digital ocean cloud servers&lt;/p&gt;
+            &lt;/div&gt;
+        &lt;/Layout&gt;
+    );
+};
+
+export default App;</pre><p><br></p><p>Then run:</p><pre class="prettyprint linenums">npm run build
+serve -s build</pre><p><br></p><p>In production/Digital Ocean, I had issues running build so I decided to build locally and push the build directory to github then pull to digital ocean.</p><p>So uncomment /build from your <code>.gitignore</code> file then run <code>npm run build</code> locally. Make a commit: </p><pre class="prettyprint linenums">git add .
+git commit -m "added build"
+git push</pre><p>Then <code>git pull</code> in digital ocean. Then run:</p><p><code>pm2 start npm -- start</code> </p><p><br></p><figure><img src="https://udemy-images.s3.amazonaws.com:443/redactor/raw/2019-11-29_10-48-32-648373165d303f2e4de720137ac1ac12.png"></figure><p><br></p><blockquote><p>You might also like to try <a href="https://www.npmjs.com/package/react-snapshot" rel="noopener noreferrer" target="_blank">react-snapshot</a></p></blockquote>

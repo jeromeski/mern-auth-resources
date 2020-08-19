@@ -1,0 +1,17 @@
+<h4>Code for server.js (React)</h4><p>Before we deploy our react app to production, there are some optimization that can be done for better performance and ease of running it live in server. You should not use <code>npm start</code> with create-react-app in production&nbsp; because that command is made to be used for development mode.</p><p><br></p><p><strong>Copy this block of code. You will need it in next lecture.</strong></p><p><br></p><pre class="prettyprint linenums">const express = require('express');
+const compression = require('compression');
+const path = require('path');
+const app = express();
+
+app.use(compression());
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () =&gt; {
+    console.log(`App is running on port ${PORT}`);
+});</pre>
